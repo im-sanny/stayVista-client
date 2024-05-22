@@ -1,7 +1,7 @@
+import { DateRange } from "react-date-range";
 import { categories } from "../Categories/CategoriesData";
 
-
-const AddRoomForm = () => {
+const AddRoomForm = ({ dates, handleDates }) => {
   return (
     <div>
       <div className="w-full min-h-[calc(100vh-40px)] flex flex-col justify-center items-center text-gray-800 rounded-xl bg-gray-50">
@@ -31,11 +31,11 @@ const AddRoomForm = () => {
                   className="w-full px-4 py-3 border-rose-300 focus:outline-rose-500 rounded-md"
                   name="category"
                 >
-                  {categories.map(category => (
-                  <option value={category.label} key={category.label}>
-                    {category.label}
-                  </option>
-                ))}
+                  {categories.map((category) => (
+                    <option value={category.label} key={category.label}>
+                      {category.label}
+                    </option>
+                  ))}
                 </select>
               </div>
 
@@ -44,6 +44,13 @@ const AddRoomForm = () => {
                   Select Availability Range
                 </label>
                 {/* Calender */}
+                <DateRange
+                  rangeColors={["#F43F5E"]}
+                  editableDateInputs={true}
+                  onChange={(item) =>handleDates(item)}
+                  moveRangeOnFirstSelection={false}
+                  ranges={[dates]}
+                />
               </div>
             </div>
             <div className="space-y-6">
