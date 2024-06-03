@@ -1,14 +1,19 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { imageUpload } from "../../api/utils";
 
 const SignUp = () => {
-  const navigate = useNavigate()
-  const { createUser, signInWithGoogle, updateUserProfile, loading, setLoading } = useAuth();
+  const navigate = useNavigate();
+  const {
+    createUser,
+    signInWithGoogle,
+    updateUserProfile,
+    loading,
+    setLoading,
+  } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -16,36 +21,35 @@ const SignUp = () => {
     const email = form.email.value;
     const password = form.password.value;
     const image = form.image.files[0];
-  
 
     try {
-      setLoading(true)
+      setLoading(true);
       // upload image and get image url
-      const image_url = await imageUpload(image)
+      const image_url = await imageUpload(image);
       console.log(image_url);
       //user registration
-      const result = await createUser(email, password)
+      const result = await createUser(email, password);
       console.log(result);
       //save username and photo in firebase
-      await updateUserProfile(name, image_url)
-      navigate('/')
-      toast.success('SignUp successfull')
+      await updateUserProfile(name, image_url);
+      navigate("/");
+      toast.success("SignUp successful");
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
   //handle google signin
-  const handleGoogleSignIn = async() =>{
+  const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle()
-      navigate('/')
-      toast.success('SignUp successfull')
+      await signInWithGoogle();
+      navigate("/");
+      toast.success("SignUp successfull");
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
-  }
+  };
   return (
     <div className="flex justify-center items-center">
       <div className="flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900">
@@ -114,11 +118,15 @@ const SignUp = () => {
 
           <div>
             <button
-            disabled={loading}
+              disabled={loading}
               type="submit"
               className="bg-rose-500 w-full rounded-md py-3 text-white"
             >
-              {loading? <TbFidgetSpinner className="animate-spin m-auto" /> : 'Continue'}
+              {loading ? (
+                <TbFidgetSpinner className="animate-spin m-auto" />
+              ) : (
+                "Continue"
+              )}
             </button>
           </div>
         </form>
@@ -129,10 +137,11 @@ const SignUp = () => {
           </p>
           <div className="flex-1 h-px sm:w-16 dark:bg-gray-700"></div>
         </div>
-        <button 
-        disabled={loading}
-        onClick={handleGoogleSignIn}
-         className="disabled:cursor-not-allowed cursor-pointer flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded">
+        <button
+          disabled={loading}
+          onClick={handleGoogleSignIn}
+          className="disabled:cursor-not-allowed cursor-pointer flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded"
+        >
           <FcGoogle size={32} />
 
           <p>Continue with Google</p>
