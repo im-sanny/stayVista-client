@@ -2,11 +2,12 @@ import { useState } from "react";
 import AddRoomForm from "../../Form/AddRoomForm";
 import useAuth from "../../../hooks/useAuth";
 import { imageUpload } from "../../../api/utils";
+import { Helmet } from "react-helmet-async";
 
 const AddRoom = () => {
   const { user } = useAuth();
   const [imagePreview, setImagePreview] = useState();
-  const [imageText, setImageText] = useState("upload image");
+  const [imageText, setImageText] = useState("Upload Image");
   const [dates, setDates] = useState({
     startDate: new Date(),
     endDate: null,
@@ -15,7 +16,6 @@ const AddRoom = () => {
 
   //date range handler
   const handleDates = (item) => {
-    console.log(item);
     setDates(item.selection);
   };
 
@@ -39,6 +39,7 @@ const AddRoom = () => {
       image: user?.photoURL,
       email: user?.email,
     };
+
     try {
       const image_url = await imageUpload(image);
       const roomData = {
@@ -60,13 +61,19 @@ const AddRoom = () => {
       console.log(error);
     }
   };
+
   //handle image change
   const handleImage = (image) => {
     setImagePreview(URL.createObjectURL(image));
     setImageText(image.name);
   };
+
   return (
-    <div>
+    <>
+      <Helmet>
+        <title>Add Room | Dashboard</title>
+      </Helmet>
+      {/* form */}
       <AddRoomForm
         dates={dates}
         handleDates={handleDates}
@@ -76,7 +83,7 @@ const AddRoom = () => {
         handleImage={handleImage}
         imageText={imageText}
       ></AddRoomForm>
-    </div>
+    </>
   );
 };
 
