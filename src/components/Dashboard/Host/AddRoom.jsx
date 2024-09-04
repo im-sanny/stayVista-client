@@ -3,14 +3,17 @@ import AddRoomForm from "../../Form/AddRoomForm";
 import useAuth from "../../../hooks/useAuth";
 import { imageUpload } from "../../../api/utils";
 import { Helmet } from "react-helmet-async";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { useMutation } from "@tanstack/react-query";
 
 const AddRoom = () => {
+  const axiosSecure = useAxiosSecure();
   const { user } = useAuth();
   const [imagePreview, setImagePreview] = useState();
   const [imageText, setImageText] = useState("Upload Image");
   const [dates, setDates] = useState({
     startDate: new Date(),
-    endDate: null,
+    endDate: new Date(),
     key: "selection",
   });
 
@@ -18,6 +21,16 @@ const AddRoom = () => {
   const handleDates = (item) => {
     setDates(item.selection);
   };
+
+  const { mutateAsync } = useMutation({
+    mutationFn: async (roomData) => {
+      const { data } = await axiosSecure.post(`/room`, roomData);
+      return data;
+    },
+    onSuccess: () => {
+      console.log("Data saved successfully");
+    },
+  });
 
   //form handler
   const handleSubmit = async (e) => {
@@ -57,6 +70,9 @@ const AddRoom = () => {
         image: image_url,
       };
       console.table(roomData);
+
+      // post request to server
+      await mutateAsync(roomData);
     } catch (error) {
       console.log(error);
     }
