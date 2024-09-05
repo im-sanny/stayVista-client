@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { DateRange } from "react-date-range";
 import { categories } from "../Categories/CategoriesData";
+import { TbFidgetSpinner } from "react-icons/tb";
 
 const AddRoomForm = ({
   dates,
@@ -9,6 +10,7 @@ const AddRoomForm = ({
   imagePreview,
   handleImage,
   imageText,
+  loading,
 }) => {
   return (
     <div>
@@ -179,10 +181,15 @@ const AddRoomForm = ({
           </div>
 
           <button
+            disabled={loading}
             type="submit"
             className="w-full p-3 mt-5 text-center font-medium text-white transition duration-200 rounded shadow-md bg-rose-500"
           >
-            Save & Continue
+            {loading ? (
+              <TbFidgetSpinner className="animate-spin m-auto" />
+            ) : (
+              "Save & Continue"
+            )}
           </button>
         </form>
       </div>

@@ -7,7 +7,7 @@ const RoomReservation = ({ room }) => {
   const [state, setState] = useState([
     {
       startDate: new Date(),
-      endDate: null,
+      endDate: new Date(),
       key: "selection",
     },
   ]);
@@ -20,8 +20,8 @@ const RoomReservation = ({ room }) => {
       <hr />
       <div className="flex justify-center">
         <DateRange
-        showDateDisplay={false}
-        rangeColors={['#F6536D']}
+          showDateDisplay={false}
+          rangeColors={["#F6536D"]}
           editableDateInputs={true}
           onChange={(item) => setState([item.selection])}
           moveRangeOnFirstSelection={false}
