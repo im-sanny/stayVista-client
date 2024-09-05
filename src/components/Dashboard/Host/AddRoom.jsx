@@ -35,7 +35,7 @@ const AddRoom = () => {
       console.log("Data saved successfully");
       toast.success("Room added successfully!");
       setLoading(false);
-      navigate("my-listing");
+      navigate("/dashboard/my-listings");
     },
   });
 
@@ -83,6 +83,7 @@ const AddRoom = () => {
       await mutateAsync(roomData);
     } catch (error) {
       console.log(error);
+      toast.error(error.message)
       setLoading(false);
     }
   };
