@@ -21,7 +21,11 @@ const MyListings = () => {
       return data;
     },
   });
-  console.log(rooms);
+  
+  // handle delete
+  const handleDelete = id =>{
+    console.log(id);
+  }
   if (isLoading) return <LoadingSpinner />;
   return (
     <>
@@ -87,6 +91,7 @@ const MyListings = () => {
                       key={room._id}
                       room={room}
                       refetch={refetch}
+                      handleDelete={handleDelete}
                     ></RoomDataRow>
                   ))}
                 </tbody>
