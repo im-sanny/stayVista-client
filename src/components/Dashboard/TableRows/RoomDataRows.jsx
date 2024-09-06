@@ -3,15 +3,15 @@ import { format } from "date-fns";
 import DeleteModal from "../../Modal/DeleteModal";
 import { useState } from "react";
 
-const RoomDataRow = ({ room, refetch, handleDelete }) => {
-
+const RoomDataRow = ({ room, handleDelete }) => {
   // for delete modal
-  let { isOpen, setIsOpen } = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const closeModal = () => {
     setIsOpen(false);
   };
+
   // for update modal
-  
+
   return (
     <tr>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
@@ -58,7 +58,12 @@ const RoomDataRow = ({ room, refetch, handleDelete }) => {
           <span className="relative">Delete</span>
         </button>
         {/* Delete modal */}
-        <DeleteModal isOpen={isOpen} closeModal={closeModal}></DeleteModal>
+        <DeleteModal
+          isOpen={isOpen}
+          closeModal={closeModal}
+          handleDelete={handleDelete}
+          id={room?._id}
+        ></DeleteModal>
       </td>
       <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
         <span className="relative cursor-pointer inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
@@ -77,6 +82,7 @@ const RoomDataRow = ({ room, refetch, handleDelete }) => {
 RoomDataRow.propTypes = {
   room: PropTypes.object,
   refetch: PropTypes.func,
+  handleDelete: PropTypes.func,
 };
 
 export default RoomDataRow;
